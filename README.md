@@ -1,2 +1,2 @@
-# qtools
-QTools - telegram bot for some simple tasks
+# QTools
+telegram bot for some simple tasks
