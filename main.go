@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -19,12 +20,20 @@ func init() {
 
 func genPasswords(countChar int) string {
 	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
-	password := make([]rune, countChar)
 
-	for i := range password {
-		password[i] = letters[rand.Intn(len(letters))]
+	var pswdHtml string = ""
+
+	for i := 1; i <= 5; i++ {
+		password := make([]rune, countChar)
+
+		for c := range password {
+			password[c] = letters[rand.Intn(len(letters))]
+		}
+
+		pswdHtml += strconv.Itoa(i) + ". <code>" + string(password) + "</code>\n"
 	}
-	return string(password)
+
+	return pswdHtml
 }
 
 func main() {
@@ -49,13 +58,20 @@ func main() {
 	updates := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-		if update.Message != nil {
-			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+		if update.Message == nil {
+			continue
+		}
 
-			update.Message.Text = genPasswords(6)
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		if !update.Message.IsCommand() {
+			continue
+		}
+
+		switch update.Message.Command() {
+		case "pswd":
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, genPasswords(10))
+			msg.ParseMode = "HTML"
 			msg.ReplyToMessageID = update.Message.MessageID
-
 			bot.Send(msg)
 		}
 	}
