@@ -18,18 +18,47 @@ var numericKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 	),
 )
 
-func GenPasswords(countChar int) string {
+type PasswordsOptions struct {
+	CountChar      int
+	CountPasswords int
+	WithSymbols    bool
+}
 
-	var pswdHtml string = ""
+func basePasswordOptions() PasswordsOptions {
+	return PasswordsOptions{
+		CountChar:      8,
+		CountPasswords: 5,
+		WithSymbols:    false,
+	}
+}
 
-	for i := 1; i <= 5; i++ {
-		password := make([]rune, countChar)
+func genPasswords(options PasswordsOptions) []string {
+	var pswdArr []string
+
+	for i := 1; i <= options.CountPasswords; i++ {
+		password := make([]rune, options.CountChar)
 
 		for c := range password {
-			password[c] = letters[rand.Intn(len(letters))]
+			if options.WithSymbols {
+				password[c] = lettersExtra[rand.Intn(len(letters))]
+			} else {
+				password[c] = letters[rand.Intn(len(letters))]
+			}
 		}
 
-		pswdHtml += strconv.Itoa(i) + ". <code>" + string(password) + "</code>\n"
+		pswdArr = append(pswdArr, string(password))
+	}
+
+	return pswdArr
+}
+
+func GetPswd() string {
+	pswdArr := genPasswords(basePasswordOptions())
+
+	var pswdHtml string = "Список сгенерированных паролей:\n"
+
+	for i, password := range pswdArr {
+		pswdHtml += strconv.Itoa(i+1) + ". <code>" + string(password) + "</code>\n"
 	}
 
 	return pswdHtml

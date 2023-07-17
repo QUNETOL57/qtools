@@ -45,10 +45,8 @@ func main() {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 
 			switch update.Message.Text {
-			case "pswd":
+			case "/pswd":
 				msg = controllers.SetPswdSettings(update)
-			case "pswd1":
-				msg.Text = "генерация"
 			}
 
 			sendMsg, err := bot.Send(msg)
@@ -75,7 +73,7 @@ func main() {
 			msg := tgbotapi.NewMessage(callback.Message.Chat.ID, "")
 			switch callback.Data {
 			case "pswd1":
-				msg.Text = controllers.GenPasswords(8)
+				msg.Text = controllers.GetPswd()
 				msg.ParseMode = "HTML"
 			}
 
