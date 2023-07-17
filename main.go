@@ -47,7 +47,11 @@ func main() {
 			switch update.Message.Text {
 			case "/pswd":
 				msg = controllers.SetPswdSettings(update)
+			case "/tcase":
+				msg = controllers.SetTCaseSettings(update)
 			}
+
+			msg = controllers.SetTCaseSettings(update)
 
 			sendMsg, err := bot.Send(msg)
 			if err != nil {
