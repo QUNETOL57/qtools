@@ -1,26 +1,31 @@
 package menu
 
-import tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+import (
+	"Qtools/app/controllers"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"strconv"
+)
 
 func showMainMenu(bot *tgbotapi.BotAPI, chatID int64) {
 	msg := tgbotapi.NewMessage(chatID, "Main Menu")
-	msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
+	replyKeyboard := tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("/pswd"),
 			tgbotapi.NewKeyboardButton("/tcase"),
 			tgbotapi.NewKeyboardButton("/tarray"),
 		),
 	)
+	msg.ReplyMarkup = replyKeyboard
+	replyKeyboard.OneTimeKeyboard = true
 	bot.Send(msg)
 }
 
 func showPswdMenu(bot *tgbotapi.BotAPI, chatID int64) {
-	msg := tgbotapi.NewMessage(chatID, "Pswd Menu")
-	msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
-		tgbotapi.NewKeyboardButtonRow(
-			tgbotapi.NewKeyboardButton("< back"),
-			tgbotapi.NewKeyboardButton("simple"),
-			tgbotapi.NewKeyboardButton("hard"),
+	msg := tgbotapi.NewMessage(chatID, "Pswd menu")
+	msg.ReplyMarkup = tgbotapi.NewInlineKeyboardMarkup(
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Быстрый", "pswd1"),
+			tgbotapi.NewInlineKeyboardButtonData("Настраиваемый", "pswd2"),
 		),
 	)
 	bot.Send(msg)
@@ -28,9 +33,17 @@ func showPswdMenu(bot *tgbotapi.BotAPI, chatID int64) {
 
 func showPswdMenuHard(bot *tgbotapi.BotAPI, chatID int64) {
 	msg := tgbotapi.NewMessage(chatID, "Pswd Menu Hard")
-	msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
-		tgbotapi.NewKeyboardButtonRow(
-			tgbotapi.NewKeyboardButton("< back"),
+
+	options := controllers.BasePasswordOptions()
+	msg.ReplyMarkup = tgbotapi.NewInlineKeyboardMarkup(
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Количество символов - "+strconv.Itoa(options.CountChar), "pswd3"),
+		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Количество паролей - "+strconv.Itoa(options.CountPasswords), "pswd4"),
+		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Использовать спец символы - "+strconv.FormatBool(options.WithSymbols), "pswd5"),
 		),
 	)
 	bot.Send(msg)
