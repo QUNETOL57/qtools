@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"Qtools/app/helpers"
 	"math/rand"
 	"strconv"
 )
@@ -44,11 +45,10 @@ func genPasswords(options PasswordsOptions) []string {
 
 func GetPswd() string {
 	pswdArr := genPasswords(BasePasswordOptions())
-
-	var pswdHtml string = "Список сгенерированных паролей:\n"
+	pswdHtml := "Список сгенерированных паролей:\n"
 
 	for i, password := range pswdArr {
-		pswdHtml += strconv.Itoa(i+1) + ". <code>" + string(password) + "</code>\n"
+		pswdHtml += strconv.Itoa(i+1) + "." + helpers.Code(string(password)) + "\n"
 	}
 
 	return pswdHtml
