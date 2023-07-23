@@ -14,7 +14,7 @@ const (
 	StateTarrayMenu
 )
 
-func HandleMenu(bot *tgbotapi.BotAPI, state map[int64]BotState, chatID int64, text string) {
+func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
 	switch state[chatID] {
 	case StateMainMenu:
 		handleMainMenu(state, bot, chatID, text)
@@ -50,12 +50,15 @@ func handleMainMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 
 func handlePswdMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
 	switch text {
-	case "simple":
+	case "pswd1":
 		msg := tgbotapi.NewMessage(chatID, controllers.GetPswd())
 		msg.ParseMode = "HTML"
+		state[chatID] = StateMainMenu
 		bot.Send(msg)
-	case "hard":
-		showPswdMenuHard(bot, chatID)
+	case "pswd2":
+		showPswdMenuSettings(bot, chatID)
+	case "pswd3":
+		showPswdMenuSettings1(bot, chatID)
 	case "< back":
 		state[chatID] = StateMainMenu
 		showMainMenu(bot, chatID)

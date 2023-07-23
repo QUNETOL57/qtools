@@ -14,13 +14,12 @@ func HandleUpdates(bot *tgbotapi.BotAPI) {
 	state := make(map[int64]menu.BotState)
 
 	for update := range updates {
-		if update.Message == nil {
-			continue
+		if update.Message != nil {
+			chatID := update.Message.Chat.ID
+			text := update.Message.Text
+			menu.HandleMenu(state, bot, chatID, text)
+		} else if update.CallbackQuery != nil {
+			menu.HandleInlineMenu(state, bot, update)
 		}
-
-		chatID := update.Message.Chat.ID
-		text := update.Message.Text
-
-		menu.HandleMenu(bot, state, chatID, text)
 	}
 }
