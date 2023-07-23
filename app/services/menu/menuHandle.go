@@ -41,7 +41,7 @@ func handleMainMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 		showTcaseMenu(bot, chatID)
 		state[chatID] = StateTcaseMenu
 	case "/tarray":
-		showTarrayMenu(bot, chatID)
+		showTarrayText(bot, chatID)
 		state[chatID] = StateTarrayMenu
 		//default:
 		//	handleUnknownCommand(bot, chatID)
@@ -66,17 +66,6 @@ func handlePswdMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 }
 
 func handleTcaseMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
-	switch text {
-	case "< back":
-		state[chatID] = StateMainMenu
-		showMainMenu(bot, chatID)
-	default:
-		msg := tgbotapi.NewMessage(chatID, "ok")
-		bot.Send(msg)
-	}
-}
-
-func handleTarrayMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
 	switch text {
 	case "< back":
 		state[chatID] = StateMainMenu
