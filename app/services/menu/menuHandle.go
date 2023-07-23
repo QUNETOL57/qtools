@@ -56,7 +56,9 @@ func handlePswdMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 		state[chatID] = StateMainMenu
 		bot.Send(msg)
 	case "pswd2":
-		showPswdMenuHard(bot, chatID)
+		showPswdMenuSettings(bot, chatID)
+	case "pswd3":
+		showPswdMenuSettings1(bot, chatID)
 	case "< back":
 		state[chatID] = StateMainMenu
 		showMainMenu(bot, chatID)
