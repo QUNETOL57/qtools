@@ -30,6 +30,10 @@ func setArray(text string, quotesType string, bracketsType string) string {
 	var textArrayStr string
 	textArray := strings.Split(strings.TrimSpace(text), " ")
 
+	if len(textArray) == 1 {
+		textArray = strings.Split(text, "\n")
+	}
+
 	switch quotesType {
 	case TArraySingleQuotes:
 		quote = "'"

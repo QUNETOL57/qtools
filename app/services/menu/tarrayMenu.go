@@ -2,15 +2,17 @@ package menu
 
 import (
 	"Qtools/app/controllers"
+	"Qtools/app/helpers"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 var textToArray string
-var quotesType string = controllers.TArrayWithoutQuotes
+var quotesType string
 
 func handleTarrayMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
 	switch text {
 	case controllers.TArrayFristMenuStr:
+		quotesType = controllers.TArrayWithoutQuotes
 		showTarrayStyle(bot, chatID)
 	case controllers.TArraySecondMenuStr:
 		showTarraySecondMenu(bot, chatID)
@@ -31,7 +33,9 @@ func handleTarrayMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int
 }
 
 func showTarrayText(bot *tgbotapi.BotAPI, chatID int64) {
-	msg := tgbotapi.NewMessage(chatID, "Enter text:")
+	msg := tgbotapi.NewMessage(chatID, "#️⃣ "+helpers.Bold("tarray")+" - a tool for quickly converting a series of values from a string to an array \n\n"+
+		"Enter text separated by space or newline:")
+	msg.ParseMode = "HTML"
 	msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("< back"),
