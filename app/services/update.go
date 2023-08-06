@@ -2,6 +2,7 @@ package services
 
 import (
 	"Qtools/app/services/menu"
+	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -11,12 +12,15 @@ func HandleUpdates(bot *tgbotapi.BotAPI) {
 
 	updates := bot.GetUpdatesChan(u)
 
-	state := make(map[int64]menu.BotState)
+	state := make(map[int64]map[menu.BotState]interface{})
 
 	for update := range updates {
 		if update.Message != nil {
 			chatID := update.Message.Chat.ID
 			text := update.Message.Text
+			fmt.Println("-----------------")
+			fmt.Println(state)
+			fmt.Println("-----------------")
 			menu.HandleMenu(state, bot, chatID, text)
 		} else if update.CallbackQuery != nil {
 			menu.HandleInlineMenu(state, bot, update)

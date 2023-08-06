@@ -12,9 +12,10 @@ const (
 	StatePswdMenu
 	StateTcaseMenu
 	StateTarrayMenu
+	StateDsymbMenu
 )
 
-func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
+func HandleMenu(state map[int64]map[BotState]interface{}, bot *tgbotapi.BotAPI, chatID int64, text string) {
 	switch state[chatID] {
 	case StateMainMenu:
 		handleMainMenu(state, bot, chatID, text)
@@ -24,8 +25,8 @@ func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, te
 		handleTcaseMenu(state, bot, chatID, text)
 	case StateTarrayMenu:
 		handleTarrayMenu(state, bot, chatID, text)
-		//default:
-		//	handleUnknownState(bot, chatID)
+	case StateDsymbMenu:
+		handleTarrayMenu(state, bot, chatID, text)
 	}
 }
 
@@ -37,14 +38,16 @@ func handleMainMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 	case "/pswd":
 		showPswdMenu(bot, chatID)
 		state[chatID] = StatePswdMenu
-	case "/tcase":
-		showTcaseMenu(bot, chatID)
-		state[chatID] = StateTcaseMenu
+	//case "/tcase":
+	//	showTcaseMenu(bot, chatID)
+	//	state[chatID] = StateTcaseMenu
 	case "/tarray":
 		showTarrayText(bot, chatID)
 		state[chatID] = StateTarrayMenu
-		//default:
-		//	handleUnknownCommand(bot, chatID)
+	case "/dsymb":
+		showDsymbText(bot, chatID)
+		state[chatID] = StateDsymbMenu
+
 	}
 }
 

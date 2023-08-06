@@ -9,8 +9,9 @@ func showMainMenu(bot *tgbotapi.BotAPI, chatID int64) {
 	replyKeyboard := tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("/pswd"),
-			tgbotapi.NewKeyboardButton("/tcase"),
+			//tgbotapi.NewKeyboardButton("/tcase"),
 			tgbotapi.NewKeyboardButton("/tarray"),
+			tgbotapi.NewKeyboardButton("/dsymb"),
 		),
 	)
 	msg.ReplyMarkup = replyKeyboard

@@ -33,7 +33,7 @@ func handleTarrayMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int
 }
 
 func showTarrayText(bot *tgbotapi.BotAPI, chatID int64) {
-	msg := tgbotapi.NewMessage(chatID, "#️⃣ "+helpers.Bold("tarray")+" - a tool for quickly converting a series of values from a string to an array \n\n"+
+	msg := tgbotapi.NewMessage(chatID, "#️⃣ "+helpers.Bold("tarray")+" - is a tool for quickly converting a series of values from a string to an array \n\n"+
 		"Enter text separated by space or newline:")
 	msg.ParseMode = "HTML"
 	msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
