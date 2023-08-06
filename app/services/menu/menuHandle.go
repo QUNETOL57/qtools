@@ -1,7 +1,6 @@
 package menu
 
 import (
-	"Qtools/app/controllers"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -37,31 +36,14 @@ func handleMainMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 	case "/pswd":
 		showPswdMenu(bot, chatID)
 		state[chatID] = StatePswdMenu
-	case "/tcase":
-		showTcaseMenu(bot, chatID)
-		state[chatID] = StateTcaseMenu
+	//case "/tcase":
+	//	showTcaseMenu(bot, chatID)
+	//	state[chatID] = StateTcaseMenu
 	case "/tarray":
 		showTarrayText(bot, chatID)
 		state[chatID] = StateTarrayMenu
 		//default:
 		//	handleUnknownCommand(bot, chatID)
-	}
-}
-
-func handlePswdMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
-	switch text {
-	case "pswd1":
-		msg := tgbotapi.NewMessage(chatID, controllers.GetPswd())
-		msg.ParseMode = "HTML"
-		state[chatID] = StateMainMenu
-		bot.Send(msg)
-	case "pswd2":
-		showPswdMenuSettings(bot, chatID)
-	case "pswd3":
-		showPswdMenuSettings1(bot, chatID)
-	case "< back":
-		state[chatID] = StateMainMenu
-		showMainMenu(bot, chatID)
 	}
 }
 
