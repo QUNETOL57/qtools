@@ -45,10 +45,10 @@ func genPasswords(options PasswordsOptions) []string {
 
 func GetPswd() string {
 	pswdArr := genPasswords(BasePasswordOptions())
-	pswdHtml := "Список сгенерированных паролей:\n"
+	pswdHtml := "List of generated passwords:\n"
 
 	for i, password := range pswdArr {
-		pswdHtml += strconv.Itoa(i+1) + "." + helpers.Code(string(password)) + "\n"
+		pswdHtml += strconv.Itoa(i+1) + ". " + helpers.Code(string(password)) + "\n"
 	}
 
 	return pswdHtml
