@@ -45,6 +45,25 @@ func (m *Menu) HandleCommand(userId string, command string) {
     }
 }
 
+
+func (m *Menu) SetUserState(userId string, state string) {
+    usersStates[userId] = []
+}
+
+func (m *Menu) GetMenuState(userId) {
+	states := usersStates[userId]
+	menuState := m.Items[states[0]]
+
+	if len(states) > 1 {
+		for _, state := range states[1:] {
+			&menuState.SubItems[state]
+		}
+		
+	}
+
+	return menuState
+}
+
 func main() {
     menu := Menu{
         Items:     make(map[BotState]MenuItem){
@@ -55,35 +74,78 @@ func main() {
 			},
 			StatePswdMenu : MenuItem{
 				Text: "pwsd",
-				Command: func() { fmt.Println("Вывод меню pswd") }
+				Command: func() { fmt.Println("Меню с выбором simple и hard") }
+				Handle: func() { fmt.Println("Обработчик для pswd: 
+				Обработка:
+					simple
+					hard
+				") }
 				SubItems: map[BotState]MenuItem{
 					StatePswdMenu1 : MenuItem{
 						Text: "pwsd simple",
-						Command: func() { fmt.Println("Вывод simple") }
+						Command: func() { fmt.Println("генерация simple") }
 						NextMenuId: StateMainMenu
 					},
 					StatePswdMenu2 : MenuItem{
 						Text: "pwsd hard",
-						Command: func() { fmt.Println("Вывод hard") }
+						Command: func() { fmt.Println("меню hard") }
+						Handle: func() { fmt.Println("Обработчик для настроек hard генерации. 
+						обработка:
+							StatePswdMenu3
+							StatePswdMenu4
+							StatePswdMenu5
+							generate
+						") } 
+						NextMenuId: StateMainMenu
 						SubItems: map[BotState]MenuItem{
 							StatePswdMenu3 : MenuItem{
 								Text: "pwsd настроить количество символов",
-								Command: func() { fmt.Println("Вывод simple") }
+								Command: func() { fmt.Println("настроить количество символов") }
+								Handle: func() { fmt.Println("Обработчик для настройки количества символов
+								Обработка:
+								ввода текста
+								") }
 								NextMenuId: StatePswdMenu2
 							},
 							StatePswdMenu4 : MenuItem{
 								Text: "pwsd настроить количество паролей",
-								Command: func() { fmt.Println("Вывод simple") }
+								Command: func() { fmt.Println("настроить количество паролей") }
+								Handle: func() { fmt.Println("Обработчик для настройки количество паролей 
+								Обработка:
+								ввода текста
+								") }
 								NextMenuId: StatePswdMenu2
 							},
 							StatePswdMenu5 : MenuItem{
 								Text: "pwsd настроить вывод спец символов",
-								Command: func() { fmt.Println("Вывод simple") }
+								Command: func() { fmt.Println("настроить вывод спец символов") }
+								Handle: func() { fmt.Println("Обработчик для настройки вывода спец символов 
+								Обработка:
+								ввода текста
+								") }
 								NextMenuId: StatePswdMenu2
 							},
 						}
 					},
 			},
+			StateTarrayMenu : MenuItem{
+				Text: "tarray menu",
+				Command: func() { fmt.Println("Вывод запроса текстка") }
+				Handle: func() { fmt.Println("Обработчик для :
+				Для текста
+				") }
+				NextMenuId: StateTarrayMenu1
+				SubItems: map[BotState]MenuItem{
+					StateTarrayMenu1 : {
+						Text: "меню выбора simple И with quotes",
+						Command: func() { fmt.Println("Вывод запроса текстка") }
+						Handle: func() { fmt.Println("Обработчик для :
+						Для текста
+						") }
+						NextMenuId: StateTarrayMenu
+					},
+				}
+			}
 			
 		}
     }
