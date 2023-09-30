@@ -7,11 +7,12 @@ import (
 )
 
 func handleRstringMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
-	newText, dublicates := controllers.RemoveDuplicate(text)
+	textNew, textOld, duplicates := controllers.RemoveDuplicate(text)
 
-	msg := tgbotapi.NewMessage(chatID, newText)
+	msg := tgbotapi.NewMessage(chatID, "Text without duplicates:\n"+textNew)
 	bot.Send(msg)
-	msg2 := tgbotapi.NewMessage(chatID, dublicates)
+	msg2 := tgbotapi.NewMessage(chatID, "Duplicates:\n"+helpers.Code(duplicates)+"\n\nOriginal text with highlighted duplicates:\n"+textOld)
+	msg2.ParseMode = "HTML"
 	bot.Send(msg2)
 
 	state[chatID] = StateMainMenu
@@ -20,7 +21,7 @@ func handleRstringMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID in
 
 func showRstringText(bot *tgbotapi.BotAPI, chatID int64) {
 	msg := tgbotapi.NewMessage(chatID, "#️⃣ "+helpers.Bold("rstring")+" - a tool for removing duplicates in text \n\n"+
-		"Enter text :")
+		"Please enter text where words are separated by a space or a line break :")
 	msg.ParseMode = "HTML"
 	msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
