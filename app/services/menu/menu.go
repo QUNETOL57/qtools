@@ -11,6 +11,7 @@ func showMainMenu(bot *tgbotapi.BotAPI, chatID int64) {
 			tgbotapi.NewKeyboardButton("/pswd"),
 			//tgbotapi.NewKeyboardButton("/tcase"),
 			tgbotapi.NewKeyboardButton("/tarray"),
+			tgbotapi.NewKeyboardButton("/rstring"),
 		),
 	)
 	msg.ReplyMarkup = replyKeyboard
