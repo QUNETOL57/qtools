@@ -11,6 +11,7 @@ const (
 	StatePswdMenu
 	StateTcaseMenu
 	StateTarrayMenu
+	StateRstringMenu
 )
 
 func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
@@ -23,6 +24,8 @@ func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, te
 		handleTcaseMenu(state, bot, chatID, text)
 	case StateTarrayMenu:
 		handleTarrayMenu(state, bot, chatID, text)
+	case StateRstringMenu:
+		handleRstringMenu(state, bot, chatID, text)
 		//default:
 		//	handleUnknownState(bot, chatID)
 	}
@@ -42,6 +45,9 @@ func handleMainMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 	case "/tarray":
 		showTarrayText(bot, chatID)
 		state[chatID] = StateTarrayMenu
+	case "/rstring":
+		showRstringText(bot, chatID)
+		state[chatID] = StateRstringMenu
 		//default:
 		//	handleUnknownCommand(bot, chatID)
 	}
