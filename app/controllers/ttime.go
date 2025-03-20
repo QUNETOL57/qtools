@@ -22,7 +22,6 @@ func GetData(ts string) string {
 		return "error"
 	}
 
-	// Загружаем необходимую временную зону (например, Москва)
 	moscowLoc, err := time.LoadLocation("Europe/Moscow")
 	if err != nil {
 		fmt.Println("Ошибка при загрузке временной зоны Москва:", err)
