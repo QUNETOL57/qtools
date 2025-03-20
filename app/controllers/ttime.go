@@ -30,6 +30,19 @@ func GetData(ts string) string {
 	}
 
 	tsTime := ConvertFloatTimestamp(tsFloat)
-	result := "Greenwich Mean Time (UTC+0): " + helpers.Code(tsTime.UTC().Format("02.01.2006 15:04:05")) + "\nEurope/Moscow (UTC+3): " + helpers.Code(tsTime.In(moscowLoc).Format("02.01.2006 15:04:05"))
+	result := "Greenwich Mean Time (UTC+0)" +
+		"\n========================================" +
+		"\n" + helpers.Code("RU DateTime | ") + helpers.Code(tsTime.UTC().Format("02.01.2006 15:04:05")) +
+		"\n" + helpers.Code("DateTime    | ") + helpers.Code(tsTime.UTC().Format(time.DateTime)) +
+		"\n" + helpers.Code("RFC3339     | ") + helpers.Code(tsTime.UTC().Format(time.RFC3339)) +
+		"\n" + helpers.Code("RFC1123     | ") + helpers.Code(tsTime.UTC().Format(time.RFC1123)) +
+		"\n" + helpers.Code("ANSIC       | ") + helpers.Code(tsTime.UTC().Format(time.ANSIC)) +
+		"\n\nEurope/Moscow (UTC+3):" +
+		"\n========================================" +
+		"\n" + helpers.Code("RU DateTime | ") + helpers.Code(tsTime.In(moscowLoc).Format("02.01.2006 15:04:05")) +
+		"\n" + helpers.Code("DateTime    | ") + helpers.Code(tsTime.In(moscowLoc).Format(time.DateTime)) +
+		"\n" + helpers.Code("RFC3339     | ") + helpers.Code(tsTime.In(moscowLoc).Format(time.RFC3339)) +
+		"\n" + helpers.Code("RFC1123     | ") + helpers.Code(tsTime.In(moscowLoc).Format(time.RFC1123)) +
+		"\n" + helpers.Code("ANSIC       | ") + helpers.Code(tsTime.In(moscowLoc).Format(time.ANSIC))
 	return result
 }

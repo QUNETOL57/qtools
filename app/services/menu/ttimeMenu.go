@@ -20,23 +20,13 @@ func showTtimeText(bot *tgbotapi.BotAPI, chatID int64) {
 
 func handleTtimeMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
 	switch text {
-	//case controllers.TArrayFristMenuStr:
-	//	quotesType = controllers.TArrayWithoutQuotes
-	//	showTarrayStyle(bot, chatID)
-	//case controllers.TArraySecondMenuStr:
-	//	showTarraySecondMenu(bot, chatID)
-	//case controllers.TArraySingleQuotes, controllers.TArrayDoubleQuotes:
-	//	quotesType = text
-	//	showTarrayStyle(bot, chatID)
-	//case controllers.TArrayRound, controllers.TArraySquare, controllers.TArrayCurly, controllers.TArrayOld:
-	//	sendArray(bot, chatID, text)
-	//	state[chatID] = StateMainMenu
-	//	showMainMenu(bot, chatID)
 	case "< back":
 		state[chatID] = StateMainMenu
 		showMainMenu(bot, chatID)
 	default:
 		getData(bot, chatID, text)
+		state[chatID] = StateMainMenu
+		showMainMenu(bot, chatID)
 	}
 }
 
