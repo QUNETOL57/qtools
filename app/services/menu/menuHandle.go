@@ -12,6 +12,7 @@ const (
 	StateTcaseMenu
 	StateTarrayMenu
 	StateRstringMenu
+	StateTtimeMenu
 )
 
 func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, text string) {
@@ -26,6 +27,8 @@ func HandleMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64, te
 		handleTarrayMenu(state, bot, chatID, text)
 	case StateRstringMenu:
 		handleRstringMenu(state, bot, chatID, text)
+	case StateTtimeMenu:
+		handleTtimeMenu(state, bot, chatID, text)
 		//default:
 		//	handleUnknownState(bot, chatID)
 	}
@@ -48,6 +51,9 @@ func handleMainMenu(state map[int64]BotState, bot *tgbotapi.BotAPI, chatID int64
 	case "/rstring":
 		showRstringText(bot, chatID)
 		state[chatID] = StateRstringMenu
+	case "/ttime":
+		showTtimeText(bot, chatID)
+		state[chatID] = StateTtimeMenu
 		//default:
 		//	handleUnknownCommand(bot, chatID)
 	}
