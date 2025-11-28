@@ -1,8 +1,5 @@
-# Specify the version for docker-compose.yml
-version: "3.8"
-
 services:
-  qTools:
-    container_name: qTools
+  qtools:
+    container_name: qtools
     build:
       context: .
